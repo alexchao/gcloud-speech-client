@@ -9,7 +9,7 @@ from recognize_async import write_results_to_file
 def start(uri, path):
     operation = start_operation(uri, 44100)
     results = wait_for_results(operation)
-    write_results_to_file(path, results)
+    write_results_to_file(path, results, operation.name)
 
 
 if __name__ == '__main__':

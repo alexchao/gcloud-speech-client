@@ -60,7 +60,9 @@ def _format_results(results):
     return results_json
 
 
-def write_results_to_file(file_path, results):
+def write_results_to_file(file_path, results, operation_name):
     """Write result set out to given file path as JSON."""
+    results_json = _format_results(results)
+    results_json['name'] = operation_name
     with open(file_path, 'w') as f:
-        f.write(json.dumps(_format_results(results), indent=JSON_INDENT_SIZE))
+        f.write(json.dumps(results_json, indent=JSON_INDENT_SIZE))
