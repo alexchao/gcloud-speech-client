@@ -21,7 +21,6 @@ class FullAsyncTest(unittest.TestCase):
         start(TEST_FLAC_URI, TEST_FILE_PATH)
         with open(TEST_FILE_PATH, 'r') as f:
             results = json.loads(f.read())
-            import ipdb ; ipdb.set_trace()
             self.assertEqual(
                 results['results'][0]['alternatives'][0]['transcript'],
                 'Sam Harris is the Flying Spaghetti Monster'
