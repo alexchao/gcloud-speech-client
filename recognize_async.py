@@ -36,9 +36,12 @@ def wait_for_results(operation):
     while not operation.complete:
         time.sleep(POLL_DELAY)
         operation.poll()
-        sys.stdout.write('Progress: {p}%\n'.format(
+        sys.stdout.write('\rProgress: {p}%'.format(
             p=operation.metadata.progress_percent))
         sys.stdout.flush()
+
+    sys.stdout.write('\rProgress: Done\n')
+    sys.stdout.flush()
 
     return operation.results
 
