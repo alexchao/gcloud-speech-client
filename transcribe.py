@@ -6,16 +6,25 @@ from recognize_async import wait_for_results
 from recognize_async import write_results_to_file
 
 
-def start(uri, path):
-    operation = start_operation(uri, 44100)
+DEFAULT_SAMPLE_RATE = 44100
+
+
+def start(uri, path, sample_rate):
+    operation = start_operation(uri, sample_rate)
     results = wait_for_results(operation)
     write_results_to_file(path, results, operation.name)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    # TODO: add other args (sample rate, encoding, language, etc.)
+    # TODO: add other args (encoding, language, etc.)
     parser.add_argument('uri', help='GCS URI for audio file')
     parser.add_argument('path', help='Output file path')
+    parser.add_argument(
+        '--sample-rate',
+        dest='sample_rate',
+        type=int,
+        default=DEFAULT_SAMPLE_RATE,
+        help='Sample rate of supplied audio data (defaults to {})'.format(DEFAULT_SAMPLE_RATE))
     args = parser.parse_args()
-    start(args.uri, args.path)
+    start(args.uri, args.path, args.sample_rate)
