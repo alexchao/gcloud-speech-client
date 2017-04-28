@@ -18,7 +18,7 @@ class FullAsyncTest(unittest.TestCase):
             os.remove(TEST_FILE_PATH)
 
     def test_full_async(self):
-        start(TEST_FLAC_URI, TEST_FILE_PATH)
+        start(TEST_FLAC_URI, TEST_FILE_PATH, 44100)
         with open(TEST_FILE_PATH, 'r') as f:
             results = json.loads(f.read())
             self.assertEqual(
