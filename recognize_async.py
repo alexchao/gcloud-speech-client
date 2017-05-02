@@ -11,8 +11,14 @@ POLL_DELAY = 3
 JSON_INDENT_SIZE = 2
 
 
-def start_operation(gcs_uri, sample_rate):
+# TODO(#3): consolidate operation arguments into a config object
+def start_operation(gcs_uri, sample_rate, hint_phrases):
     """Start an asychronous speech-to-text operation.
+
+    Arguments:
+        gcs_uri -- gs://bucket-name/file-name.flac
+        sample_rate -- e.g. 44100
+        hint_phrases -- list of speech context hints as strings
 
     Return the started `Operation`
     """
@@ -23,7 +29,9 @@ def start_operation(gcs_uri, sample_rate):
         encoding=speech.Encoding.FLAC,
         sample_rate_hertz=sample_rate)
     # TODO: allow user to specify language
-    operation = sample.long_running_recognize('en-US')
+    operation = sample.long_running_recognize(
+        'en-US',
+        speech_contexts=hint_phrases)
     sys.stdout.write('Started job: {n}\n'.format(n=operation.name))
     return operation
 
